@@ -1,0 +1,5 @@
+./epserver -p www -f epserver-multiprocess.conf -c 0 &
+for i in {1..7}
+do
+   ./epserver -p www -f epserver-mutliprocess.conf -c $i
+done

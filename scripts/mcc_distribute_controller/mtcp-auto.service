@@ -1,0 +1,16 @@
+[Uint]
+Description=mtcp service
+After=network.target
+#Requires=dpdk-firewall.servece
+#Wants=dpdk-firewall.service
+
+[Service]
+Type=idle
+ExecStart=/home/songhui/infgen/mtcp/setup_mtcp_dpdk_env.sh
+#:wqExecStart=/home/firewall/firewall/l2fwd/shell.sh
+#TimeoutSec=0
+#RemainAfterExit=yes
+
+
+[Install]
+WantedBy=multi-user.target

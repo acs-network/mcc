@@ -1,0 +1,19 @@
+# build file
+build/
+
+deps/
+
+mtcp/dpdk/x86_64-native-linuxapp-gcc/
+
+# temporary file
+*.swp
+proto/*.pb.*
+proto-3.5.0/*
+fmt-6.1.0/*
+
+*.a
+
+cscope.out
+success*
+tags
+*hosts

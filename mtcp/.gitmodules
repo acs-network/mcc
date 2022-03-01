@@ -1,0 +1,6 @@
+[submodule "dpdk"]
+	path = dpdk
+	url = http://172.16.32.104/beide123/dpdk.git
+  branch = master
+  commit = 0da7f445df445630c794897347ee360d6fe6348b
+
