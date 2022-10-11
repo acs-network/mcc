@@ -5,7 +5,7 @@ MCC is a predictable and highly scalable network load generator used for simulat
 ### Release Notes
 
 **V 1.1**
-+ Up to generating 10 million concurrent connections
++ Up to generating 10 million concurrent connections on a single server
 + Fix the bug of the address pool hash on multi-cores in mtcp
 + Multi-Priority requests generator
 
@@ -78,6 +78,32 @@ executable file is put in directory `$PWD/build/$build_type/`
 The `apps` subdirectory contains several generator apps using mcc framework, runtime options
 can be viewed using `-h` option, check the code for more details.
 * mcc: massive concurrent connection, simulate a large number of concurrent tcp connections scenerio, modify the payload content to get reasonable response from your server.
+
+Example for simulate 10000000 connections, packets sending threads are 15, send payload 140 bytes, high proriaty requests ratio is 0.05
+
+Testbed
+CPU：Intel(R) Xeon(R) Gold 6130 CPU @ 2.10GHz
+Mem：128GB
+OS：CentOS Linux release 7.4.1708
+Kernel：3.10.0-957.el7.x86_64
+NIC：82599 10 Gigabit Dual Port Network Connection 10fb
+
+$ vim config/mtcp.conf
+rcvbuf = 256  (> receive packet length)
+sndbuf = 256  (> send packet length)
+max_concurrency = 800000 (> c/(smp -1))
+max_num_buffers = 800000 (default equal to max_concurrency)
+
+$ vim config/arp.conf
+Add server arp lists
+$ vim config/route.conf
+Add server ip and dpdk Ethernet device name
+
+#dpdk0 ip config
+$ ifconfig dpdk0 192.168.94.10/16
+
+ulimit -n 10000000
+```
 
 ```bash
 $ cd <path to MCC>/build/release/apps/mcc
