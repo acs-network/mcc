@@ -50,7 +50,7 @@ $ cd mtcp
 $ ./setup_mtcp_dpdk_env.sh
      - Press [15] x86_64-native-linux-gcc to compile the package
      - Press [18] Insert IGB UIO module to install the driver
-     - Press [22] Setup hugepage mappings for NUMA systems to setup hugepages(10240 best for each node)
+     - Press [22] Setup hugepage mappings for NUMA systems to setup hugepages(Best input 20480 for every NUMA node with 2M hugepages, or 40 for every NUMA node with 1G hugepages.)
      - Press [24] Bind Ethernet/Baseband/Crypto device to IGB UIO module
      - Press [35] Exit Script to quit the tool
      - Press "y" Get dpdk Ethernet device name(dpdk0 for default)
@@ -81,6 +81,7 @@ can be viewed using `-h` option, check the code for more details.
 
 Example for simulate 10000000 connections, packets sending threads are 15, send payload 140 bytes, high proriaty requests ratio is 0.05
 
+```
 Testbed
 CPU：Intel(R) Xeon(R) Gold 6130 CPU @ 2.10GHz
 Mem：128GB
@@ -131,29 +132,20 @@ SMP options:
   --smp arg (=1)        number of threads (default: one per CPU)
   --mode arg (=normal)  I/O mode
 
-Example for simulate 10000000 connections, packets sending threads are 15, send payload 140 bytes, high proriaty requests ratio is 0.05
-
-$ vim config/mtcp.conf
-rcvbuf = 256  (> receive packet length)
-sndbuf = 256  (> send packet length)
-max_concurrency = 800000 (> c/(smp -1))
-max_num_buffers = 800000 (default equal to max_concurrency)
-
-$ vim config/arp.conf
-Add server arp lists
-$ vim config/route.conf
-Add server ip and dpdk Ethernet device name
-
-#dpdk0 ip config
-$ ifconfig dpdk0 192.168.94.10/16
-
-ulimit -n 1000000
-```
 
 ### Run MCC
 
 ```bash
 $ ./mcc -c 10200000 -b 170000 -l 140 -e 60 -w 30 -s 60 -r 0.05 --smp 16 --network-stack mtcp --dest 192.168.93.100
+```
+
+### Quit MCC
+```bash
+$ ^Ctrl+C
+#Check the process residual
+$ ps –aux | grep mcc
+#if the process residual
+$ killall -9 mcc
 ```
 
 ### References
