@@ -63,12 +63,13 @@ $ make
 #### MCC install
 First install the dependencies:
 ```
-$sudo ./install_dependencies.sh
+$./install_dependencies.sh
 ```
-Warning: this scripts will try to change current linux kenrel, modify it if you don't want do that.
+**Note: We Must apply non-root user privileges to compile MCC, otherwise the comiling will be stopped.**
+
 Then build the project using the scripts:
 ```
-$sudo ./build.sh
+$./build.sh
 ```
 There is a `build_type` option in `build.sh` to designate build type of the project. And the built 
 executable file is put in directory `$PWD/build/$build_type/`
@@ -92,7 +93,7 @@ NIC：82599 10 Gigabit Dual Port Network Connection 10fb
 $ vim config/mtcp.conf
 rcvbuf = 256  (> receive packet length)
 sndbuf = 256  (> send packet length)
-max_concurrency = 800000 (> c/(smp -1))
+max_concurrency = 800000 (> c/(smp - 1))
 max_num_buffers = 800000 (default equal to max_concurrency)
 
 $ vim config/arp.conf

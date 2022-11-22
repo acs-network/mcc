@@ -9,6 +9,13 @@ SOURCE_DIR=$(pwd)
 export RTE_SDK=$PWD/mtcp/dpdk
 export RTE_TARGET=x86_64-native-linuxapp-gcc
 
+user=$(env | grep USER | cut -d "=" -f 2)
+if [ "$user" == "root" ]
+ then 
+    echo Error! Do not compile as root!
+    exit
+fi
+
 rm -f lib/*.a
 
 cd ./src/aes/
